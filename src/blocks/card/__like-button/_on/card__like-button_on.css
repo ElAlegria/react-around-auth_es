@@ -1,0 +1,19 @@
+@keyframes click {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.5);
+  }
+  50% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.5);
+  }
+}
+
+.card__like-button_on {
+  background-image:url("../../../../images/blackheart-icon.svg");
+  animation: click 0.3s ease-in-out forwards;
+}

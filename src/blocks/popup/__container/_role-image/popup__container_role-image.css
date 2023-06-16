@@ -1,0 +1,9 @@
+.popup__container_role-image {
+  /* display: none; */
+  background-color: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+}

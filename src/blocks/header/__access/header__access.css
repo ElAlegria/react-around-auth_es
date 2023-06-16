@@ -1,0 +1,19 @@
+
+.header__access {
+  font-family: inter;
+  font-size: 18px;
+  line-height: 22px;
+  color: white;
+  transition: opacity 0.2s ease;
+  cursor: pointer;
+}
+
+.header__access:hover {
+    opacity: .8;
+}
+@media screen and (max-width: 320px) {
+  .header__access{
+    font-size: 14px;
+    line-height: 17;
+  }
+}
