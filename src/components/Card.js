@@ -1,57 +1,58 @@
-import React from "react";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
-import heartWhite from "../images/blackheart-icon.svg";
+import React from 'react';
+import {CurrentUserContext} from '../contexts/CurrentUserContext';
 
 function Card(props) {
   const currentUser = React.useContext(CurrentUserContext);
 
-  const { cardOwnerId, link, Name, likes, onCardLike, onCardDelate } = props;
-  const isOwn = cardOwnerId === currentUser._id;
-  const isLiked = likes.some((i) => i._id === currentUser._id);
+  const isOwn = props.card.owner._id === currentUser._id;
+  const cardDeleteButtonClassName = `card__delete-button ${
+    isOwn && 'card__delete-button_active'
+  }`;
 
-  function handleClickCard() {
-    props.onCardClick(props);
+  const isLiked = props.card.likes.some((i) => i._id === currentUser._id);
+  const cardLikeButtonClassName = `card__like-button ${
+    isLiked && 'card__like-button_on'
+  }`;
+
+  function handleClick() {
+    props.onCardClick(props.card);
   }
-  function handleDelateCard() {
-    onCardDelate(props);
+
+  function handleLikeClick() {
+    props.onCardLike(props.card);
+  }
+
+  function handleDeleteClick() {
+    props.onDeleteCard(props.card);
   }
 
   return (
-    <div className={`card animation__join-up`}>
-      <button
-        type="button"
-        className={`card__delete-button ${
-          isOwn ? "card__delete-button_active" : ""
-        }`}
-        aria-label="trash"
-        onClick={handleDelateCard}
-      ></button>
-      <img
-        className="card__image"
-        src={link}
-        alt={Name}
-        onClick={handleClickCard}
-      />
-      <img
-        className={`card__like ${isLiked ? "card__like_on" : ""}`}
-        src={heartWhite}
-        alt={"heart like"}
-      />
-      <div className="card__information animation__join-left">
-        <h2 className="card__title">{Name}</h2>
-        <div className="card__like-container">
-          <button
-            type="button"
-            className={`card__like-button ${
-              isLiked ? "card__like-button_on" : ""
-            }`}
-            aria-label="Like button"
-            onClick={onCardLike}
-          ></button>
-          <p className="card__like-counter">{likes.length}</p>
+    <>
+      <li key={props.card._id} className="card">
+        <button
+          type="button"
+          className={cardDeleteButtonClassName}
+          onClick={handleDeleteClick}></button>
+        <img
+          src={props.card.link}
+          alt={props.card.name}
+          onClick={handleClick}
+          className="card__image"
+        />
+        <div className="card__information">
+          <h2 className="card__title">{props.card.name}</h2>
+          <div className="card__like-container">
+            <button
+              type="button"
+              className={cardLikeButtonClassName}
+              onClick={handleLikeClick}></button>
+            <p className="card__like-counter">
+              {props.card.likes ? props.card.likes.length : 0}
+            </p>
+          </div>
         </div>
-      </div>
-    </div>
+      </li>
+    </>
   );
 }
 

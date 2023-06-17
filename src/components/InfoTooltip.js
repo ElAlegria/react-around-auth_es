@@ -1,30 +1,41 @@
-import accessIcon from "../images/access-icon-__true.png";
-import negateIcon from "../images/access-icon-negate.png";
-import closeIcon from "../images/Close-Icon.png";
-function InfoTooltip(props) {
-  const { access } = props;
-  return (
-    <>
-      <section className="InfoToolTip">
-        <img
-          className="InfoToolTip__button-close popup__close-button"
-          alt="Close popup"
-          src={closeIcon}
-        />
+import React from "react";
+import accepted from '../images/accepted.jpg';
+import denied from '../images/denied.jpg';
 
-        <img
-          className="InfoTooltipe__access-icon "
-          src={access ? accessIcon : negateIcon}
-          alt="access icon and negative icon"
-        />
-        <p className="InfoTooltipe__info">
-          {access
-            ? "¡Correcto! Ya estás registrado."
-            : "Uy, algo salió mal. Por favor, inténtalo de nuevo."}
-        </p>
-      </section>
-    </>
-  );
-}
+const InfoTooltip = ({ error, infoToolOpen, handleClose }) => {
+    return (
+      <div className={`popup ${infoToolOpen && 'popup_opened'}`}>
+        <div className="popup__container infoTooltip">
+          <button
+            alt="Icono de cerrar"
+            className="popup__close-button"
+            onClick={handleClose}></button>
+          {error ? (
+            <>
+              <img
+                src={denied}
+                alt="Icono de rechazo"
+                className="popup__image"
+              />
+              <h2 className="popup__title popup__title_tooltip">
+                Uy, algo salió mal. Por favor, inténtalo de nuevo
+              </h2>
+            </>
+          ) : (
+            <>
+              <img
+                src={accepted}
+                alt="Icono de aprobación"
+                className="popup__image"
+              />
+              <h2 className="popup__title popup__title_tooltip">
+                ¡Correcto! Ya estás registrado
+              </h2>
+            </>
+          )}
+        </div>
+      </div>
+    );
+};
 
 export default InfoTooltip;

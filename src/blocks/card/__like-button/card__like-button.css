@@ -16,6 +16,3 @@
   cursor: pointer;
 }
 
-.card__like-button:active {
-  background-image: url(../../../images/blackheart-icon.svg);
-}

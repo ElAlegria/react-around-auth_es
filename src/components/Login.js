@@ -1,54 +1,83 @@
-import { useNavigate } from "react-router-dom";
-import AccessTemplate from "./templateAcces";
-import { useState } from "react";
-// import * as auth from '../utils/auth' 
+import React, {useEffect} from 'react';
+import * as auth from '../utils/auth';
+import {Link, useLocation, useNavigate} from 'react-router-dom';
+import InfoTooltip from './InfoTooltip';
 
-function Login(props) {
-  const { handleLogin } = props;
-  // const [formDataLogin, setFormDataLogin] = useState({});
+const Login = ({handleLogin}) => {
+  const [formData, setFormData] = React.useState({});
+  const [infoToolOpen, setInfoToolOpen] = React.useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  // const navigate = useNavigate();
-  // const handleChangeLogin = (e) => {
-  //   const { name, value } = e.target;
+  const handleChange = (e) => {
+    const {name, value} = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+  const handleCloseInfoTool = () => {
+    setInfoToolOpen(false);
+    navigate('/signin', {state: {}});
+  };
+  const onLogin = (e) => {
+    const {password, email} = formData;
+    e.preventDefault();
+    auth
+      .authorize(password, email)
+      .then((data) => {
+        if (data.token) {
+          setFormData({email: '', password: ''});
+          navigate('/');
+          handleLogin();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    if (location.state === 'success') {
+      setInfoToolOpen(true);
+    }
+  }, [location]);
 
-  //   setFormDataLogin({
-  //     ...formDataLogin,
-  //     [name]:value
-  //   })
-  // };
-
-  // const handleSubmit = (evt) =>{
-  //   const {email,password} = formDataLogin
-  //   evt.preventDefault();
-  //   auth.authorize()
-  // }
   return (
-    <AccessTemplate
-      title={"Inicia sesión"}
-      buttonName={"Inicia sesión"}
-      description={"¿Aún no eres miembro? Regístrate aquí"}
-      access={props.access}
-    >
-      <div className="access__inputs-container">
-        <label className="login__field">
-          <input
-            className="access__input"
-            id="login__mail"
-            placeholder="Correo electronico"
-            name="email"
-          />
-        </label>
-        <label className="login__field">
-          <input
-            className="access__input"
-            id="login__password"
-            placeholder="Contraseña"
-            name="password"
-          />
-        </label>
+    <>
+      <div className="login">
+        <form action="" className="form" onSubmit={onLogin}>
+          <h2 className="form__title">Inicia sesión</h2>
+          <label className="form__label">
+            <input
+              type="email"
+              className="form__input"
+              placeholder="Correo electrónico"
+              name="email"
+              required
+              onChange={handleChange}
+            />
+          </label>
+          <label className="form__label">
+            <input 
+              type="password"
+              className='form__input'
+              placeholder='Contraseña'
+              name='password'
+              required
+              onChange={handleChange}
+            />
+          </label>
+          <button className='form__button'>Inicia sesión</button>
+          <Link to='/signup' className='form__link'>¿Aún no eres miembro? Regístrate aquí</Link>
+        </form>
       </div>
-    </AccessTemplate>
+      <InfoTooltip
+        error={false}
+        infoToolOpen={infoToolOpen}
+        handleClose={handleCloseInfoTool}
+      />
+    </>
   );
-}
+};
 
 export default Login;

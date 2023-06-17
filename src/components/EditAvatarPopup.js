@@ -1,44 +1,47 @@
 import React from "react";
-import PopupWithForm from "./PopupWithForm";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import PopupWithForm from './PopupWithForm';
 
 function EditAvatarPopup(props) {
+    
+    const imageRef = React.useRef();
+    const [errors, setErrors] = React.useState({}); 
 
-  const currentUser = React.useContext(CurrentUserContext);
+    function handleSubmit(e) {
+      e.preventDefault();
+      props.onUpdateAvatar({
+        avatar: imageRef.current.value,
+      });
+      e.target.reset();
+    }
 
-  const avatarRef = React.useRef(currentUser.avatar);
-  
-  function handleSubmit(e) {
-    e.preventDefault();
-    props.onUpdateAvatar({
-      avatar: avatarRef.current.value,
-    });
-  }
-  return (
-    <PopupWithForm
-      name="image_profile"
-      title="Cambiar foto de perfil"
-      action="Save"
-      isOpen={props.isOpen}
-      onCLose={props.onCLose}
-      onSubmit={handleSubmit}
-    >
-      <label className="popup__field" htmlFor="popup-input-image">
-        <input
-          type="url"
-          name="avatar"
-          placeholder="Imagen URL"
-          id="popup-input-image"
-          className="popup__input"
-          ref={avatarRef}
-          value={undefined}
-        />
-        <span className="popup__error popup-input-image-error">
-          Introduce una dirección web.
-        </span>
-      </label>
-    </PopupWithForm>
-  );
+    return (
+      <PopupWithForm
+        name="image_profile"
+        title="Cambiar foto de Perfil"
+        isOpen={props.isOpen}
+        onClose={props.onClose}
+        onSubmit={handleSubmit}
+        errors={errors}
+        setErrors={setErrors}
+        handleExternalClick={props.handleExternalClick}>
+        <>
+          <label className="popup__field" htmlFor="popup-input-image">
+            <input
+              type="url"
+              name="image-link"
+              placeholder="Imagen URL"
+              id="popup-input-image"
+              className="popup__input"
+              ref={imageRef}
+              required
+            />
+            <span className="popup__error popup__error_visible">
+              {errors['image-link']}
+            </span>
+          </label>
+        </>
+      </PopupWithForm>
+    );
 }
 
 export default EditAvatarPopup;

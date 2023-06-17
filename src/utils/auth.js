@@ -1,12 +1,12 @@
-const BASE_URL = 'https://register.nomoreparties.co'
+import { API_BASE_URL } from './config';
 
 export const register = (password, email) => {
-  return fetch(`${BASE_URL}/signup`, {
-    method: "POST",
+  return fetch(`${API_BASE_URL}/signup`, {
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json"
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ password, email }),
+    body: JSON.stringify({password, email}),
   })
     .then((res) => {
       return res.json();
@@ -15,23 +15,29 @@ export const register = (password, email) => {
 };
 
 export const authorize = (password, email) => {
-  return fetch(`${BASE_URL}/signin`, {
-    method: "POST",
-    headers: '',
-    body: JSON.stringify({ password, email }),
+  return fetch(`${API_BASE_URL}/signin`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({password, email}),
   })
-    .then((res) => {
-      return res.json();
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.token) {
+        localStorage.setItem('jwt', data.token);
+        return data;
+      }
     })
     .catch((err) => console.log(err));
 };
 
-const getToken = (JWT)=>{
-  return fetch(`${BASE_URL}/users/me`,{
-    method:'GET',
-    headers:{
-      'Content-Type':'application/json',
-      'Authorization':`Bearer ${JWT}`
-    }
-  })
-}
+export const checkToken = (token) => {
+  return fetch(`${API_BASE_URL}/users/me`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  }).then((res) => res.json());
+};
