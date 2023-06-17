@@ -39,7 +39,7 @@ Around the U.S. es un proyecto full-stack que presenta una página web de red so
 
 ## Proyecto en Vivo 👁‍🗨
 
-- [Disfrutalo en vivo!](https://elalegria.github.io/react-around-auth_es/)
+- [Disfrutalo en vivo!](https://elalegria.github.io/react-around-auth_es)
 
 
 All authorization, registration and token requests must go through to the server running on [https://register.nomoreparties.co](https://register.nomoreparties.co/).
