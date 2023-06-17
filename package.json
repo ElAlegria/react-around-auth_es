@@ -12,7 +12,7 @@
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
-  "homepage": "https://elalegria.github.io/around-react_es",
+  "homepage": "https://elalegria.github.io/react-around-auth_es",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

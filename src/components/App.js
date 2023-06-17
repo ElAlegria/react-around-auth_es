@@ -1,24 +1,25 @@
-import React from 'react';
-import Header from './Header';
-import Main from './Main';
-import Footer from './Footer';
-import DeletePopup from './DeletePopup';
-import EditProfilePopup from './EditProfilePopup';
-import EditAvatarPopup from './EditAvatarPopup';
-import AddPlacePopup from './AddPlacePopup';
-import ImagePopup from './ImagePopup';
-import api from '../utils/api';
-import {CurrentUserContext} from '../contexts/CurrentUserContext';
-import Login from './Login';
-import Register from './Register';
-import InfoTooltip from './InfoTooltip';
-import * as auth from '../utils/auth';
-import {Route, Routes, useNavigate} from 'react-router-dom';
-import ProtectedRoute from './ProtectedRoute';
+import React from "react";
+import Header from "./Header";
+import Main from "./Main";
+import Footer from "./Footer";
+import DeletePopup from "./DeletePopup";
+import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
+import AddPlacePopup from "./AddPlacePopup";
+import ImagePopup from "./ImagePopup";
+import api from "../utils/api";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import Login from "./Login";
+import Register from "./Register";
+import InfoTooltip from "./InfoTooltip";
+import * as auth from "../utils/auth";
+import { Route, Routes, useNavigate } from "react-router-dom";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
+
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
-    React.useState(false);
+  React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
     React.useState(false);
@@ -29,7 +30,7 @@ function App() {
   const [cards, setCards] = React.useState([]);
   const [selectedCard, setSelectedCard] = React.useState({});
   const [loggedIn, setLoggedIn] = React.useState(false);
-  const [email, setEmail] = React.useState('');
+  const [email, setEmail] = React.useState("");
 
   const navigate = useNavigate();
 
@@ -90,9 +91,9 @@ function App() {
       });
   }
 
-  function handleUpdateUser({name, about}) {
+  function handleUpdateUser({ name, about }) {
     api
-      .setUserInfo({name, about})
+      .setUserInfo({ name, about })
       .then((data) => {
         setCurrentUser(data);
         setIsEditProfilePopupOpen(false);
@@ -102,7 +103,7 @@ function App() {
       });
   }
 
-  function handleUpdateAvatar({avatar}) {
+  function handleUpdateAvatar({ avatar }) {
     api
       .setUserAvatar(avatar)
       .then((data) => {
@@ -116,7 +117,7 @@ function App() {
 
   function handleAddPlaceSubmit(name, link) {
     api
-      .addCard({name, link})
+      .addCard({ name, link })
       .then((newCard) => {
         setCards([newCard, ...cards]);
         setIsAddPlacePopupOpen(false);
@@ -127,13 +128,13 @@ function App() {
   }
 
   const handleExternalClick = (event) => {
-    if (event.target.classList.contains('popup')) {
+    if (event.target.classList.contains("popup")) {
       closeAllPopups();
     }
   };
 
   const handleKeyPress = React.useCallback((e) => {
-    if (e.key === 'Escape') {
+    if (e.key === "Escape") {
       closeAllPopups();
     }
   }, []);
@@ -143,22 +144,22 @@ function App() {
   };
 
   const handleSignOut = () => {
-    localStorage.removeItem('jwt');
-    setEmail('');
+    localStorage.removeItem("jwt");
+    setEmail("");
     setLoggedIn(false);
   };
 
   React.useEffect(() => {
     const handleTokenCheck = () => {
-      if (localStorage.getItem('jwt')) {
-        const jwt = localStorage.getItem('jwt');
+      if (localStorage.getItem("jwt")) {
+        const jwt = localStorage.getItem("jwt");
         auth
           .checkToken(jwt)
           .then((res) => {
             if (res.data) {
               setEmail(res.data.email);
               setLoggedIn(true);
-              navigate('/');
+              navigate("/");
             }
           })
           .catch((err) => {
@@ -170,9 +171,9 @@ function App() {
   }, [loggedIn, navigate]);
 
   React.useEffect(() => {
-    window.addEventListener('keydown', handleKeyPress);
+    window.addEventListener("keydown", handleKeyPress);
     return () => {
-      window.removeEventListener('keydown', handleKeyPress);
+      window.removeEventListener("keydown", handleKeyPress);
     };
   }, [handleKeyPress]);
 
@@ -201,7 +202,8 @@ function App() {
             <Route
               path="/"
               exact
-              element={<ProtectedRoute loggedIn={loggedIn} />}>
+              element={<ProtectedRoute loggedIn={loggedIn} />}
+            >
               <Route
                 path="/"
                 element={
