@@ -1,7 +1,6 @@
-import React from 'react';
-import Card from './Card';
-import { CurrentUserContext } from '../contexts/CurrentUserContext';
-
+import React from "react";
+import Card from "./Card";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Main(props) {
   const currentUser = React.useContext(CurrentUserContext);
@@ -19,24 +18,31 @@ function Main(props) {
               />
               <div
                 className="profile__avatar-overlay"
-                onClick={props.onEditAvatar}></div>
+                onClick={props.onEditAvatar}
+              ></div>
             </div>
             <div className="profile__information">
               <div className="profile__wrap">
-                <h1 className="profile__user">{currentUser.name}</h1>
+                <h1 className="profile__user" maxLength="30" minLength={2}>
+                  {currentUser.name}
+                </h1>
                 <button
                   type="button"
                   className="profile__edit-button"
-                  onClick={props.onEditProfile}></button>
+                  onClick={props.onEditProfile}
+                ></button>
               </div>
-              <p className="profile__profession">{currentUser.about}</p>
+              <p className="profile__profession" maxLength="30" minLength={2}>
+                {currentUser.about}
+              </p>
             </div>
           </div>
           <button
             type="button"
             className="profile__add-button"
             aria-label="add button"
-            onClick={props.onAddPlace}></button>
+            onClick={props.onAddPlace}
+          ></button>
         </section>
 
         <section className="cards">
