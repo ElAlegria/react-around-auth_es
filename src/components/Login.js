@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import * as auth from "../utils/auth";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import InfoTooltip from "./InfoTooltip";
+import InfoTooltip from "./InfoToolTip";
 
 const Login = ({ handleLogin }) => {
   const [formData, setFormData] = React.useState({});
@@ -31,8 +31,6 @@ const Login = ({ handleLogin }) => {
           setFormData({ email: "", password: "" });
           navigate("/");
           handleLogin();
-          setError(true)
-
         }
       })
       .catch(() => {
@@ -79,7 +77,6 @@ const Login = ({ handleLogin }) => {
       </div>
       <InfoTooltip
         errorRegister={error}
-        errorLogin={false}
         infoToolOpen={infoToolOpen}
         handleClose={handleCloseInfoTool}
       />

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import * as auth from "../utils/auth";
 import { Link, useNavigate } from "react-router-dom";
-import InfoTooltip from "./InfoTooltip";
+import InfoTooltip from "./InfoToolTip";
 
 const Register = () => {
   const [formData, setFormData] = useState({});
@@ -67,7 +67,6 @@ const Register = () => {
       </div>
       <InfoTooltip
         errorRegister={error}
-        errorLogin={true}
         infoToolOpen={infoToolOpen}
         handleClose={handleCloseInfoTool}
       />

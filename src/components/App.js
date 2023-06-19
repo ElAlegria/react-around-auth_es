@@ -11,7 +11,7 @@ import api from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import Login from "./Login";
 import Register from "./Register";
-import InfoTooltip from "./InfoTooltip";
+import InfoTooltip from "./InfoToolTip";
 import * as auth from "../utils/auth";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";

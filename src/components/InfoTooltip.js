@@ -2,12 +2,7 @@ import React from "react";
 import accepted from "../images/accepted.jpg";
 import denied from "../images/denied.jpg";
 
-const InfoTooltip = ({
-  errorRegister,
-  errorLogin,
-  infoToolOpen,
-  handleClose,
-}) => {
+const InfoTooltip = ({ errorRegister, infoToolOpen, handleClose }) => {
   return (
     <div
       className={`popup ${
@@ -23,10 +18,8 @@ const InfoTooltip = ({
         {errorRegister ? (
           <>
             <img src={denied} alt="Icono de rechazo" className="popup__image" />
-            <h2 className="popup__title popup__title_tooltip">
-              {errorLogin
-                ? "Uy, algo salió mal. Por favor, inténtalo de nuevo"
-                : "Uy, algo salió mal. Escriba correctamente su password/email"}
+            <h2 lassName="popup__title popup__title_tooltip">
+              {"Uy, algo salió mal. Por favor, inténtalo de nuevo"}
             </h2>
           </>
         ) : (
@@ -37,7 +30,7 @@ const InfoTooltip = ({
               className="popup__image"
             />
             <h2 className="popup__title popup__title_tooltip">
-              {errorLogin ? "Bienvenido amo" : "¡Correcto! Ya estás registrado"}
+              {"¡Correcto! Ya estás registrado"}
             </h2>
           </>
         )}
