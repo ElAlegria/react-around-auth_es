@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
-import * as auth from '../utils/auth';
-import {Link, useNavigate} from 'react-router-dom';
-import InfoTooltip from './InfoTooltip';
+import React, { useState } from "react";
+import * as auth from "../utils/auth";
+import { Link, useNavigate } from "react-router-dom";
+import InfoTooltip from "./InfoTooltip";
 
 const Register = () => {
   const [formData, setFormData] = useState({});
@@ -10,7 +10,7 @@ const Register = () => {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    const {name, value} = e.target;
+    const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
@@ -19,15 +19,14 @@ const Register = () => {
 
   const handleCloseInfoTool = () => {
     setInfoToolOpen(false);
-    setError(false);
   };
 
   const onRegister = (evt) => {
     evt.preventDefault();
-    const {password, email} = formData;
+    const { password, email } = formData;
     auth.register(password, email).then((res) => {
       if (res.data) {
-        navigate('/signin', {state: 'success'});
+        navigate("/signin", { state: "success" });
       } else {
         setError(true);
       }
@@ -67,7 +66,8 @@ const Register = () => {
         </form>
       </div>
       <InfoTooltip
-        error={error}
+        errorRegister={error}
+        errorLogin={true}
         infoToolOpen={infoToolOpen}
         handleClose={handleCloseInfoTool}
       />

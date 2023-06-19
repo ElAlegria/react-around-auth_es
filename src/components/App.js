@@ -17,9 +17,8 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
-
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
-  React.useState(false);
+    React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
     React.useState(false);
@@ -151,8 +150,8 @@ function App() {
 
   React.useEffect(() => {
     const handleTokenCheck = () => {
-      if (localStorage.getItem("jwt")) {
-        const jwt = localStorage.getItem("jwt");
+      const jwt = localStorage.getItem("jwt");
+      if (jwt) {
         auth
           .checkToken(jwt)
           .then((res) => {

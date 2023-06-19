@@ -1,16 +1,17 @@
-import React, {useEffect} from 'react';
-import * as auth from '../utils/auth';
-import {Link, useLocation, useNavigate} from 'react-router-dom';
-import InfoTooltip from './InfoTooltip';
+import React, { useEffect } from "react";
+import * as auth from "../utils/auth";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import InfoTooltip from "./InfoTooltip";
 
-const Login = ({handleLogin}) => {
+const Login = ({ handleLogin }) => {
   const [formData, setFormData] = React.useState({});
   const [infoToolOpen, setInfoToolOpen] = React.useState(false);
+  const [error, setError] = React.useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
   const handleChange = (e) => {
-    const {name, value} = e.target;
+    const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
@@ -18,26 +19,29 @@ const Login = ({handleLogin}) => {
   };
   const handleCloseInfoTool = () => {
     setInfoToolOpen(false);
-    navigate('/signin', {state: {}});
+    navigate("/signin", { state: {} });
   };
   const onLogin = (e) => {
-    const {password, email} = formData;
+    const { password, email } = formData;
     e.preventDefault();
     auth
       .authorize(password, email)
       .then((data) => {
         if (data.token) {
-          setFormData({email: '', password: ''});
-          navigate('/');
+          setFormData({ email: "", password: "" });
+          navigate("/");
           handleLogin();
+          setError(true)
+
         }
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        setError(true);
+        setInfoToolOpen(true);
       });
   };
   useEffect(() => {
-    if (location.state === 'success') {
+    if (location.state === "success") {
       setInfoToolOpen(true);
     }
   }, [location]);
@@ -58,21 +62,24 @@ const Login = ({handleLogin}) => {
             />
           </label>
           <label className="form__label">
-            <input 
+            <input
               type="password"
-              className='form__input'
-              placeholder='Contraseña'
-              name='password'
+              className="form__input"
+              placeholder="Contraseña"
+              name="password"
               required
               onChange={handleChange}
             />
           </label>
-          <button className='form__button'>Inicia sesión</button>
-          <Link to='/signup' className='form__link'>¿Aún no eres miembro? Regístrate aquí</Link>
+          <button className="form__button">Inicia sesión</button>
+          <Link to="/signup" className="form__link">
+            ¿Aún no eres miembro? Regístrate aquí
+          </Link>
         </form>
       </div>
       <InfoTooltip
-        error={false}
+        errorRegister={error}
+        errorLogin={false}
         infoToolOpen={infoToolOpen}
         handleClose={handleCloseInfoTool}
       />

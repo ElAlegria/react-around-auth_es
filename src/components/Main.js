@@ -1,9 +1,15 @@
 import React from "react";
 import Card from "./Card";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import InfoTooltip from "./InfoTooltip";
 
 function Main(props) {
+  const [infoToolOpen, setInfoToolOpen] = React.useState(true);
   const currentUser = React.useContext(CurrentUserContext);
+
+  const handleCloseInfoTool = () => {
+    setInfoToolOpen(false);
+  };
 
   return (
     <>
@@ -58,6 +64,11 @@ function Main(props) {
             ))}
           </ul>
         </section>
+        <InfoTooltip
+        errorLogin={true}
+        infoToolOpen={infoToolOpen}
+        handleClose={handleCloseInfoTool}
+      />
       </main>
     </>
   );
